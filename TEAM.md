@@ -98,7 +98,7 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 - [Báo cáo cá nhân](report/team/2A202603831_VuVanBinh.md), [bảng lỗi](report/team/bang_loi.md), [bảng chi phí](report/team/bang_chi_phi.md) và [hồ sơ launch](report/team/ho_so_launch_v0.md).
 
-## 2A202603828-NguyenTaiMinhHuy
+## `2A202603828-NguyenTaiMinhHuy`
 
 ### Phần việc phụ trách
 
