@@ -2,18 +2,18 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm: `<TenNhom>` *(cập nhật tên nhóm không dấu)*
+- Tên nhóm: `TLiet` *(cập nhật tên nhóm không dấu)*
 - Lớp: `L3B` *(đổi thành `L3A` nếu học lớp sáng/L3A)*
-- Repo nhóm: `K5-L3B-DAY13-<TenNhom>-LaunchEconomics` (xem [SUBMISSION.md](SUBMISSION.md))
+- Repo nhóm: `K5-L3B-DAY13-TLiet-LaunchEconomics` (xem [SUBMISSION.md](SUBMISSION.md))
 - URL repo, nhánh nộp, commit chốt: `https://github.com/ArthurTheMana/K5-L3B-DAY13-<TenNhom>-LaunchEconomics` · nhánh `main`
 
 ## Thành viên
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-| 1 | `<Thành viên 1>` | `<MSSV_1>` | `cptkhai@gmail.com` | `ArthurTheMana` | Người viết code (CP1, CP2) |
+| 1 | `<Thành viên 1>` | `<MSSV_1>` | '<Email_1>' | `ArthurTheMana` | Người viết code (CP1, CP2) |
 | 2 | `<Thành viên 2>` | `<MSSV_2>` | `<Email_2>` | `<GitHub_2>` | Người kiểm số & viết code (CP4) |
-| 3 | `<Thành viên 3>` | `<MSSV_3>` | `<Email_3>` | `<GitHub_3>` | Người gắn nhãn 1 (CP3) |
+| 3 | `Cao Phạm Tân Khải` | `2A202603883` | `cptkhai@gmail.com` | `capkhai` | Người gắn nhãn 1 (CP3) |
 | 4 | `<Thành viên 4>` | `<MSSV_4>` | `<Email_4>` | `<GitHub_4>` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
 
 Bốn vai của lab:
@@ -65,7 +65,7 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 ---
 
-## `<HoVaTen_3>-<MSSV_3>`
+## `2A202603883-CaoPhamTanKhai`
 
 ### Phần việc phụ trách
 
