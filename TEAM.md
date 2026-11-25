@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-| 1 | `<Thành viên 1>` | `<MSSV_1>` | '<Email_1>' | `ArthurTheMana` | Người viết code (CP1, CP2) |
+| 1 | `Nguyễn Tài Minh Huy` | `2A203603828` | '<Email_1>' | `ArthurTheMana` | Người viết code (CP1, CP2) |
 | 2 | `<Thành viên 2>` | `<MSSV_2>` | `<Email_2>` | `<GitHub_2>` | Người kiểm số & viết code (CP4) |
 | 3 | `Cao Phạm Tân Khải` | `2A202603883` | `cptkhai@gmail.com` | `capkhai` | Người gắn nhãn 1 (CP3) |
 | 4 | `Vũ Văn Bình` | `2A202603831` | `binhvuvan2004@gmail.com` | `hnib1908` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
@@ -97,3 +97,26 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 ### Bằng chứng
 
 - [Báo cáo cá nhân](report/team/2A202603831_VuVanBinh.md), [bảng lỗi](report/team/bang_loi.md), [bảng chi phí](report/team/bang_chi_phi.md) và [hồ sơ launch](report/team/ho_so_launch_v0.md).
+
+## 2A202603828-NguyenTaiMinhHuy
+
+### Phần việc phụ trách
+
+- Người viết code chính giai đoạn đầu, phụ trách Nhiệm vụ A (CP1) và Nhiệm vụ B (CP2).
+- Thiết lập môi trường Python, kiểm thử dữ liệu đầu vào và đối chiếu kết quả chạy `src/lab13.py`.
+
+### Đóng góp cụ thể
+
+- Cài đặt 3 hàm kinh tế chạy lại ở A1 (`so_lan_chay_ky_vong`, `ti_le_thanh_cong`, `he_so_chi_phi_moi_viec_thanh_cong`), đạt 3 phép thử đáp án biết trước (1,20 · 1,25 · 1,25).
+- Xây dựng hàm `mo_hinh` ở A2, tính chi phí token, tool, chạy lại, xem lại và làm lại từ dữ liệu trace; xác định CPS là 4.472 đ cho 978 yêu cầu thành công.
+- Phân tích A3 theo 4 loại yêu cầu (`noi_dia`, `hang_nang`, `quoc_te`, `doi_tac`), tính tỷ lệ thành công, số lần chạy trung bình và CPS của từng loại.
+- Thực hiện A4, phân bổ chi phí cố định 40 triệu đ/tháng cho hai kịch bản 45.000 và 22.500 yêu cầu/tháng.
+- Hoàn thành 9 kịch bản độ nhạy B1, kịch bản kết hợp B2 và phân tích chi phí toàn hệ thống theo giới hạn số lần chạy ở B3.
+- Xây dựng kịch bản B4 xem lại 100%, sử dụng giả định simulated 5 phút xem lại và 9 phút làm lại; tính CPS là 11.743 đ.
+- Tổng hợp và kiểm tra kết quả Nhiệm vụ A và B trong báo cáo chi phí, đồng thời sử dụng AI để hỗ trợ viết code, giải thích công thức và rà soát kết quả.
+
+### Bằng chứng
+
+- Code và kết quả thực thi trong `src/lab13.py`.
+- Bảng số liệu và phân tích trong `report/team/bang_chi_phi.md`.
+- Commit GitHub: `faad1b1` trên nhánh `main`.
