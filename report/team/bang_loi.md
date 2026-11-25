@@ -8,7 +8,7 @@ Quy tắc cốt lõi: **phân loại theo nguyên nhân gốc**, không phân lo
 ## 1. Hai bộ nhãn độc lập và tỉ lệ đồng thuận
 
 - **Người gắn nhãn 1:** Thành viên 1 *(cập nhật họ tên & MSSV trong `TEAM.md`)*
-- **Người gắn nhãn 2:** Thành viên 2 *(cập nhật họ tên & MSSV trong `TEAM.md`)*
+- **Phụ trách bộ nhãn 2:** Vũ Văn Bình (2A202603831), thành viên số 4. [Phân công trong TEAM.md](../../TEAM.md)
 
 | Ca | Tóm tắt tình huống | Nhãn người 1 | Nhãn người 2 | Trùng? | Nhãn thống nhất |
 | --: | --- | --- | --- | :---: | --- |

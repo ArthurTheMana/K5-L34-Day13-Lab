@@ -14,7 +14,7 @@
 | 1 | `<Thành viên 1>` | `<MSSV_1>` | '<Email_1>' | `ArthurTheMana` | Người viết code (CP1, CP2) |
 | 2 | `<Thành viên 2>` | `<MSSV_2>` | `<Email_2>` | `<GitHub_2>` | Người kiểm số & viết code (CP4) |
 | 3 | `Cao Phạm Tân Khải` | `2A202603883` | `cptkhai@gmail.com` | `capkhai` | Người gắn nhãn 1 (CP3) |
-| 4 | `<Thành viên 4>` | `<MSSV_4>` | `<Email_4>` | `<GitHub_4>` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
+| 4 | `Vũ Văn Bình` | `2A202603831` | `binhvuvan2004@gmail.com` | `hnib1908` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
 
 Bốn vai của lab:
 
@@ -83,17 +83,17 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 ---
 
-## `<HoVaTen_4>-<MSSV_4>`
+## `2A202603831-VuVanBinh`
 
 ### Phần việc phụ trách
 
-- Người gắn nhãn 2 (Nhiệm vụ C) kiêm giữ hồ sơ xuyên suốt buổi (`ho_so_launch_v0.md`, `group_report.md`, `phieu_cham.md`).
+- Phụ trách lượt gắn nhãn thứ hai ở CP3 và giữ hồ sơ ở CP5, gồm hồ sơ launch, báo cáo nhóm và phiếu duyệt chéo.
 
 ### Đóng góp cụ thể
 
-- Gắn độc lập bộ nhãn Người 2 cho 20 ca lỗi, cùng nhóm đặc tả bảng khắc phục 5 ca đại diện (Ca `9, 7, 18, 4, 17`) với đầy đủ event, ngưỡng, tần suất và vai trò phụ trách.
-- Tổng hợp bảng rủi ro kinh tế E2, biên tập trang tổng hợp 7 mục `report/team/ho_so_launch_v0.md` với đề xuất `GO CÓ ĐIỀU KIỆN` kèm 4 điều kiện có mốc kiểm tra, và hoàn thiện `report/team/group_report.md`.
+- Rà soát 20 nhãn hiện có theo nhãn tham khảo và kiểm tra bảng khắc phục các ca 9, 7, 18, 4 và 17 về tín hiệu phát hiện, ngưỡng, tần suất và vai trò phụ trách.
+- Đối chiếu số liệu rủi ro kinh tế ở E2 với kết quả B4 và đề xuất Go có điều kiện trong hồ sơ launch.
 
 ### Bằng chứng
 
-- Cột Nhãn người 2 và bảng khắc phục 5 ca trong `report/team/bang_loi.md`; mục E2 trong `report/team/chi_so.md`; `report/team/ho_so_launch_v0.md` và `report/team/group_report.md`.
+- [Báo cáo cá nhân](report/team/2A202603831_VuVanBinh.md), [bảng lỗi](report/team/bang_loi.md), [bảng chi phí](report/team/bang_chi_phi.md) và [hồ sơ launch](report/team/ho_so_launch_v0.md).
