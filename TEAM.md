@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-| 1 | `Nguyễn Tài Minh Huy` | `2A203603828` | '<Email_1>' | `ArthurTheMana` | Người viết code (CP1, CP2) |
+| 1 | `Nguyễn Tài Minh Huy` | `2A203603828` | `nguyentaiminhhuy831975@gmail.com` | `ArthurTheMana` | Người viết code (CP1, CP2) |
 | 2 | `<Thành viên 2>` | `<MSSV_2>` | `<Email_2>` | `<GitHub_2>` | Người kiểm số & viết code (CP4) |
 | 3 | `Cao Phạm Tân Khải` | `2A202603883` | `cptkhai@gmail.com` | `capkhai` | Người gắn nhãn 1 (CP3) |
 | 4 | `Vũ Văn Bình` | `2A202603831` | `binhvuvan2004@gmail.com` | `hnib1908` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
