@@ -5,7 +5,7 @@
 - Tên nhóm: `TLiet` *(cập nhật tên nhóm không dấu)*
 - Lớp: `L3B` *(đổi thành `L3A` nếu học lớp sáng/L3A)*
 - Repo nhóm: `K5-L3B-DAY13-TLiet-LaunchEconomics` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt: `https://github.com/ArthurTheMana/K5-L3B-DAY13-<TenNhom>-LaunchEconomics` · nhánh `main`
+- URL repo, nhánh nộp, commit chốt: `https://github.com/ArthurTheMana/K5-L3B-DAY13-TLiet-LaunchEconomics` · nhánh `main`
 
 ## Thành viên
 
