@@ -16,26 +16,27 @@ BASELINE = 12000    # đồng cho 1 yêu cầu khi nhân viên tự làm (6 phú
 
 # ---------- Nhiệm vụ A1 · Kinh tế của việc chạy lại ----------
 # TODO CP1: viết ba hàm dưới đây cho tới khi kiem_tra_dap_an_biet_truoc() in ĐẠT.
-def so_lan_chay_ky_vong(p, max_runs=None):
+def so_lan_chay_ky_vong(p, k=None):
     """Số lần chạy trung bình cho 1 yêu cầu khi mỗi lần đúng với xác suất p.
     k = số lần chạy tối đa; k=None nghĩa là chạy lại đến khi đúng."""
     if not 0 < p <= 1:
         raise ValueError("p must be between 0 and 1")
 
     # Unlimited attempts
-    if max_runs is None:
+    if k is None:
         return 1 / p
 
     # Limited attempts
-    if max_runs < 1:
-        raise ValueError("max_runs must be at least 1")
+    if k < 1:
+        raise ValueError("k must be at least 1")
 
     expected_runs = 0.0
 
-    for attempt in range(max_runs):
+    for attempt in range(k):
         expected_runs += (1 - p) ** attempt
 
     return expected_runs
+
 
 def ti_le_thanh_cong(p, k=None):
     """Xác suất yêu cầu thành công sau tối đa k lần chạy."""
@@ -47,7 +48,8 @@ def ti_le_thanh_cong(p, k=None):
 
     return 1 - (1 - p) ** k
 
-def he_so_chi_phi_moi_viec_thanh_cong(p, k):
+
+def he_so_chi_phi_moi_viec_thanh_cong(p, k=None):
     """Chi phí mỗi việc thành công, tính bằng bội số của giá một lần chạy."""
     expected_runs = so_lan_chay_ky_vong(p, k)
     success_rate = ti_le_thanh_cong(p, k)
@@ -158,7 +160,20 @@ if __name__ == '__main__':
     kiem_tra_dap_an_biet_truoc()
     ket_qua = mo_hinh(runs, reqs)
     for ten, gia_tri in ket_qua.items():
-        print(f'{ten:12s} {gia_tri:>14,.0f}')
+        if ten == 'hoa_don_moi_yc':
+            print(f'{ten:12s} {gia_tri:>14,.1f}')
+        else:
+            print(f'{ten:12s} {gia_tri:>14,.0f}')
+    boi_so_hoa_don = ket_qua["cps"] / ket_qua["hoa_don_moi_yc"]
+    chi_phi_he_thong_moi_yc = (
+        ket_qua["tong"] + (len(reqs) - ket_qua["thanh_cong"]) * BASELINE
+    ) / len(reqs)
+    print(f"CPS / hoa don moi yeu cau: {boi_so_hoa_don:.2f}x")
+    print(
+        f"Chi phi ca he thong / yeu cau (simulated): "
+        f"{chi_phi_he_thong_moi_yc:,.0f} đ ({chi_phi_he_thong_moi_yc / BASELINE:.2f}x baseline)"
+    )
+
     # TODO CP1 · Nhiệm vụ A3: tính lại theo từng giá trị của cột loai.
     print("\n===== A3: CHI PHÍ THEO LOẠI YÊU CẦU =====")
 
@@ -184,9 +199,22 @@ if __name__ == '__main__':
             f"{so_yeu_cau:4d} yêu cầu | "
             f"Thành công: {ty_le_thanh_cong:.1%} | "
             f"Lần chạy: {so_lan_chay:.2f} | "
-            f"CPS: {kq['cps']:,.0f} đ | "
+            f"CPS (sim): {kq['cps']:,.0f} đ | "
             f"So với baseline: {ty_le_chi_phi:.2f}x"
         )
+
+    # Tỉ lệ lần chạy ok theo từng attempt và loại yêu cầu (kiểm tra chạy lại có giúp không)
+    runs_loai = runs.merge(reqs[["request_id", "loai"]], on="request_id")
+    runs_loai["is_ok"] = (runs_loai["status"] == "ok").astype(float)
+    bang_ok_attempt = runs_loai.pivot_table(
+        index="loai", columns="attempt", values="is_ok", aggfunc="mean"
+    )
+    print("\nTỉ lệ status == 'ok' theo từng lần thử (attempt):")
+    for loai in ["noi_dia", "hang_nang", "quoc_te", "doi_tac"]:
+        r1 = bang_ok_attempt.loc[loai, 1]
+        r2 = bang_ok_attempt.loc[loai, 2]
+        r3 = bang_ok_attempt.loc[loai, 3]
+        print(f"  {loai:10s} | Lần 1: {r1:5.1%} | Lần 2: {r2:5.1%} | Lần 3: {r3:5.1%}")
 
 
     # ---------- Nhiệm vụ A4: Chi phí cố định ----------
@@ -235,7 +263,7 @@ if __name__ == '__main__':
     # Chi phí cơ sở dùng để so sánh các kịch bản
     cps_goc = mo_hinh(runs, reqs)["cps"]
 
-    # Các kịch bản thay đổi từng yếu tố
+    # Các kịch bản thay đổi từng yếu tố (đủ 9 kịch bản B1)
     kich_ban = [
         ("Gia token gap doi", {"gia_vao": 52, "gia_ra": 260}),
         ("Gia token giam nua", {"gia_vao": 13, "gia_ra": 65}),
@@ -244,6 +272,8 @@ if __name__ == '__main__':
         ("Lam lai gap doi", {"he_so_lam_lai": 2.0}),
         ("Lam lai giam nua", {"he_so_lam_lai": 0.5}),
         ("Luong tang 25%", {"luong_phut": 2500}),
+        ("Toi da 2 lan chay", {"max_lan_chay": 2}),
+        ("Chi 1 lan chay", {"max_lan_chay": 1}),
     ]
 
     # Chạy từng kịch bản và so sánh với chi phí gốc
@@ -339,8 +369,29 @@ if __name__ == '__main__':
 
     print(f"Yeu cau co run ok: {so_yeu_cau_ok}")
     print(f"So ca lam lai: {so_ca_sai}")
-    print(f"CPS B4: {cps_moi:,.0f} d")
-    print(f"So voi baseline: {cps_moi / BASELINE:.2f}x")
+    print(f"CPS B4 (9 phut lam lai, sim): {cps_moi:,.0f} d ({cps_moi / BASELINE:.2f}x baseline)")
+
+    # Độ nhạy B4 theo số phút làm lại trung bình từ cột simulated
+    phut_lam_lai_tb = reqs.loc[
+        reqs["ket_qua"] == "lam_lai", "phut_lam_lai_simulated"
+    ].mean()
+    chi_phi_lam_lai_tb = so_ca_sai * round(phut_lam_lai_tb, 1) * LUONG_PHUT
+    tong_moi_tb = kq["token"] + kq["tool"] + chi_phi_xem_lai + chi_phi_lam_lai_tb
+    cps_moi_tb = tong_moi_tb / kq["thanh_cong"]
+    phut_hoa_von_9 = (
+        kq["thanh_cong"] * BASELINE - kq["token"] - kq["tool"] - chi_phi_lam_lai
+    ) / (so_yeu_cau_ok * LUONG_PHUT)
+    phut_hoa_von_tb = (
+        kq["thanh_cong"] * BASELINE - kq["token"] - kq["tool"] - chi_phi_lam_lai_tb
+    ) / (so_yeu_cau_ok * LUONG_PHUT)
+    print(
+        f"CPS B4 ({phut_lam_lai_tb:.1f} phut lam lai, sim): "
+        f"{cps_moi_tb:,.0f} d ({cps_moi_tb / BASELINE:.2f}x baseline)"
+    )
+    print(
+        f"Phut xem lai hoa von: <= {phut_hoa_von_9:.1f} phut (voi 9 phut lam lai) "
+        f"hoac <= {phut_hoa_von_tb:.1f} phut (voi {phut_lam_lai_tb:.1f} phut lam lai)"
+    )
 
     # TODO CP4 · Nhiệm vụ D: cỡ mẫu.
     #   from statsmodels.stats.proportion import proportion_effectsize
@@ -413,13 +464,24 @@ if __name__ == '__main__':
     )
 
     print(f"D1e - Số yêu cầu cần mỗi nhân viên: {m_can}")
+    print(f"      Design effect ở m={m_can}: {he_so_thiet_ke(m_can, icc):.2f}")
     print(
         f"      Cỡ mẫu hiệu dụng: "
         f"{co_mau_hieu_dung(20, m_can, icc):.2f}"
     )
+    power_5pp_tai_859 = NormalIndPower().power(
+        effect_size=effect_size,
+        nobs1=n_muc_tieu,
+        alpha=alpha,
+        ratio=1.0,
+        alternative="two-sided",
+    )
+    print(f"      Power thực tế ở mức +5 điểm (với n={n_muc_tieu}): {power_5pp_tai_859:.2%}")
 
     # Kiểm tra tỷ lệ mở lại từ dữ liệu chạy thử
     ty_le_mo_lai = (reqs["mo_lai_trong_7_ngay"] == 1).mean()
+    ty_le_mo_lai_pilot = (reqs_pilot["mo_lai_trong_7_ngay"] == 1).mean()
 
     print("\n===== CP4 - KIỂM TRA AN TOÀN =====")
-    print(f"Tỷ lệ mở lại trong 7 ngày: {ty_le_mo_lai:.2%}")
+    print(f"Tỷ lệ mở lại trong 7 ngày (toàn mẫu 1.200 yc): {ty_le_mo_lai:.2%}")
+    print(f"Tỷ lệ mở lại trong 7 ngày (noi_dia + hang_nang): {ty_le_mo_lai_pilot:.2%}")
