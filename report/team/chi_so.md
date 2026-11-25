@@ -35,31 +35,35 @@ Mỗi event cần có `event_id`, `event_time`, `request_id`, `trace_id`, `assig
 | Event | Ai tạo | Thuộc tính chính (ngoài trường chung) | Thời điểm |
 | --- | --- | --- | --- |
 | `request_assigned` | Experiment Service | `trace_id`, `eligible`, `assignment_arm`, `randomization_version` | Ngay lúc chia ngẫu nhiên, trước khi xử lý |
-| `agent_invoked` | Agent Backend | `trace_id`, `run_id`, `attempt`, `model_version`, `tool_calls` | Khi bắt đầu một lần chạy Agent |
+| `input_validation_failed` | Intake / Frontend Service | `trace_id`, `field_name`, `error_code`, `raw_format_type` | Khi đầu vào khách gửi sai định dạng/mã đơn (ca 1, 9) |
+| `agent_invoked` | Agent Backend | `trace_id`, `run_id`, `attempt`, `model_version`, `pricing_version`, `tool_calls` | Khi bắt đầu một lần chạy Agent |
 | `agent_response_ready` | Agent Backend | `trace_id`, `run_id`, `status`, `tokens_in`, `tokens_out`, `suggestion_id` | Khi Agent trả gợi ý hoặc gặp lỗi |
+| `handoff_to_staff` | Agent Backend | `trace_id`, `reason` (`thieu_du_lieu`, `qua_so_lan_chay`), `summary_included` | Khi Agent chuyển yêu cầu sang nhân viên (ca 4, 19) |
 | `suggestion_reviewed` | Staff UI | `trace_id`, `suggestion_id`, `decision` (`giu`/`sua`/`bo`), `review_duration_seconds` | Khi nhân viên duyệt gợi ý |
-| `refund_reconciled` | Refund/Ledger Service | `trace_id`, `expected_amount`, `actual_amount`, `amount_error_confirmed`, `refund_id` | Sau khi đối soát khoản hoàn |
+| `refund_ledger_write` | Refund/Ledger Service | `trace_id`, `idempotency_key`, `expected_amount`, `actual_amount`, `status`, `amount_error_confirmed` | Khi ghi sổ cái và đối soát khoản hoàn (ca 7, 20) |
 | `request_closed` | Workflow Service | `trace_id`, `closed_at`, `opened_at`, `dong_trong_24h`, `final_status` | Khi yêu cầu đóng |
-| `request_reopened` | Customer Support Backend | `trace_id`, `reopened_at`, `days_after_close`, `reason_code` | Khi khách mở lại trong vòng theo dõi |
+| `ticket_reopened` | Customer Support Backend | `trace_id`, `reopened_at`, `days_after_close`, `reason_code` | Khi khách mở lại trong vòng theo dõi (ca 18) |
 | `agent_usage_recorded` | Experiment Service | `trace_id`, `assignment_arm`, `eligible`, `agent_used`, `nonuse_reason` | Khi yêu cầu kết thúc xử lý |
-| `cost_recorded` | Billing/FinOps Service | `trace_id`, `token_cost`, `tool_cost`, `review_minutes_simulated_or_actual`, `rework_minutes_simulated_or_actual` | Sau mỗi yêu cầu được quyết toán chi phí |
+| `cost_recorded` | Billing/FinOps Service | `trace_id`, `token_cost`, `tool_cost`, `review_minutes_actual`, `rework_minutes_actual` | Sau mỗi yêu cầu được quyết toán chi phí |
+| `audit_sample_checked` | Finance Audit Tool | `trace_id`, `refunded_amount`, `policy_amount`, `pricing_version`, `discrepancy_vnd` | Khi Kế toán kiểm tra mẫu 100 đơn/tuần (ca 5, 17) |
 
 **Kiểm tra chéo chỉ số → event:**
 
-- **Chỉ số chính:** `request_assigned` + `request_closed` + `request_reopened`, join theo `request_id` và `trace_id`; chỉ kết luận khi đủ cửa sổ 7 ngày.
+- **Chỉ số chính:** `request_assigned` + `request_closed` + `ticket_reopened`, nối theo `request_id` và `trace_id`; chỉ kết luận khi đủ cửa sổ 7 ngày.
 - **Tỉ lệ bỏ qua gợi ý:** `agent_response_ready` + `suggestion_reviewed`; mẫu số là những gợi ý thực sự được xem lại.
-- **Tỉ lệ mở lại:** `request_closed` + `request_reopened`; cần theo dõi đủ 7 ngày.
+- **Tỉ lệ mở lại:** `request_closed` + `ticket_reopened`; cần theo dõi đủ 7 ngày.
 - **Tỉ lệ sử dụng Agent:** `request_assigned` + `agent_usage_recorded` + `agent_invoked`; tách rõ được gán treatment và thực tế sử dụng.
-- **Tỉ lệ hoàn sai:** `refund_reconciled` + `request_assigned`; chỉ tính khi đã đối soát với dữ liệu chuẩn.
+- **Tỉ lệ hoàn sai / lỗi ngầm:** `refund_ledger_write` + `audit_sample_checked` + `request_assigned`; đối soát tự động hằng giờ kết hợp kiểm tra mẫu hằng tuần.
 
 ## E2 · Rủi ro kinh tế
 
-Dưới đây là *kịch bản giả lập (simulated)* từ bảng CP2, không phải dự báo đã kiểm chứng trong vận hành thật.
+Dưới đây là *kịch bản giả lập (`simulated`)* từ bảng độ nhạy và phân bổ cố định, không phải dự báo đã kiểm chứng trong vận hành thật.
 
 | Rủi ro | Tác động đã tính | Dấu hiệu theo dõi | Hành động | Người phụ trách |
 | --- | --- | --- | --- | --- |
-| Chi phí nhân viên làm lại tăng | Nếu làm lại ×2, CPS từ **4.472 đ** lên **6.787 đ**, **+51,77%** (simulated) | `cost_recorded.rework_minutes...`; CPS theo ngày và % request cần làm lại | Giữ rollout, phân tích top failure codes, sửa luồng/guardrail, kiểm tra lại trước mở rộng | AI Engineer |
-| Chi phí xem lại tăng mạnh | Nếu xem lại ×2, CPS tăng lên **6.292 đ**, **+40,70%** (simulated) | `suggestion_reviewed.review_duration_seconds`, tỉ lệ review và `cost_recorded` | Tối ưu UX duyệt, phân tầng rủi ro, chỉ giảm review khi an toàn được chứng minh | Product Owner |
-| Giá token tăng | Nếu giá token ×2, CPS tăng lên **4.723 đ**, **+5,62%** (simulated) | `cost_recorded.token_cost`, token/request, giá nhà cung cấp | Cảnh báo ngân sách, tối ưu prompt và cache có kiểm soát; không cắt bước xác minh an toàn | AI/FinOps Engineer |
+| Số ca phải làm lại tăng gấp đôi | Làm lại ×2 kéo CPS từ **4.472 đ** lên **6.787 đ**, **+51,77%** (`simulated`) | `cost_recorded.rework_minutes_actual`; tỉ lệ làm lại tuần > **8,0%** (mẫu phạm vi pilot hiện tại: 4,9%) | Thu hẹp về `noi_dia`, giới hạn 2 lần chạy, rà 20 trace lỗi hàng đầu trước khi mở lại `hang_nang` | PM trợ lý hoàn phí |
+| Phải duy trì xem lại 100% kéo dài | Xem lại ×2 làm CPS tăng **+40,70%** lên **6.292 đ**; xem lại 100% làm CPS vọt lên **11.743 đ = 0,98×** (9 phút làm lại) hoặc **12.415 đ = 1,03×** (15,3 phút trung bình dữ liệu) (`simulated`) | `suggestion_reviewed`: tỉ lệ yêu cầu phải xem lại còn > **50%** ở cuối bước rollout `0.25` hoặc thời gian xem lại > **4,8 phút/ca** | Giảm tỉ lệ xem lại theo bậc cho `noi_dia` khi tỉ lệ `sua + bo < 15%`; tối ưu giao diện hiển thị sẵn công thức tính | Trưởng nhóm CSKH |
+| Sản lượng thực tế thấp hơn dự kiến | Chi phí cố định 40 triệu đ/tháng cộng thêm **1.185 đ/việc** ở 45.000 yc/tháng (`4.599 đ = 0,38×`), nhưng tăng gấp đôi lên **2.370 đ/việc** (`5.784 đ = 0,48×`) nếu khối lượng giảm một nửa (`simulated`) | Số việc thành công hằng tuần qua `request_closed` đạt < **50%** kế hoạch phân bổ | Không mở rộng hạ tầng, đàm phán lại gói phí vận hành cố định trước khi đề xuất cổng tiếp theo | FinOps Engineer |
+| Giá token nhà cung cấp tăng | Giá token ×2 làm CPS tăng lên **4.723 đ**, **+5,62%** (`simulated`) | `cost_recorded.token_cost`, số token/request trên từng depot (bắt bất thường kiểu depot D05 ở ca 12) | Đặt cảnh báo ngân sách theo depot, giới hạn tối đa 2 lần chạy (tiết kiệm nhất cho cả hệ thống: **6.901.220 đ**, `simulated`) | Kỹ sư trưởng agent |
 
 **Ưu tiên theo số B1:** làm lại ×2 (**+51,77%**), xem lại ×2 (**+40,70%**), lương nhân viên +25% (**+23,12%**). Đây là xếp hạng theo *kịch bản tăng chi phí được cho*, không phải so độ nhạy chuẩn hóa của các yếu tố.

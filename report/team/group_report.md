@@ -4,9 +4,9 @@ Báo cáo tóm tắt kết quả mô phỏng cho trợ lý hoàn phí LogiX-VN. 
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm: *Chưa cập nhật.*
-- Lớp: *Chưa xác nhận trong báo cáo này.*
-- Thành viên: *Tạm để trống; sẽ cập nhật trong `TEAM.md` khi cần.*
+- Tên nhóm: `<TenNhom>` *(cập nhật tên nhóm khớp với `TEAM.md`)*
+- Lớp: `L3B` *(cập nhật nếu thuộc `L3A`)*
+- Thành viên: Xem danh sách chi tiết, vai trò và đóng góp trong [`TEAM.md`](../../TEAM.md).
 
 ## 2. Mục tiêu và cách tiếp cận
 
@@ -16,30 +16,30 @@ Mục tiêu là đánh giá liệu trợ lý hoàn phí có đáng được th�
 
 - **A — Mô hình chi phí:** Kiểm tra ba phép thử đáp án biết trước, tổng hợp token/tool trên mọi lần chạy (kể cả lỗi), cộng chi phí xem lại/làm lại **simulated**, so sánh bốn loại yêu cầu và chi phí cố định. Xem [`bang_chi_phi.md`](bang_chi_phi.md).
 - **B — Độ nhạy:** Thay từng biến giá token, chi phí nhân sự, giới hạn retry; so tổng chi phí cả hệ thống thay vì chỉ CPS của Agent. B4 sử dụng giả định riêng: review 5 phút cho yêu cầu có run `ok` và rework 9 phút cho ca `lam_lai`. Xem [`bang_chi_phi.md`](bang_chi_phi.md).
-- **C — Phân loại lỗi:** Đề xuất nhãn cho 20 tình huống thuộc năm loại; xác định cách phát hiện có thể đo, hành động khắc phục và vai trò chịu trách nhiệm. **Chưa có bộ nhãn độc lập thứ hai hoặc tỷ lệ đồng thuận được xác nhận.** Xem [`bang_loi.md`](bang_loi.md).
-- **D — Pilot:** Tính cỡ mẫu, chọn chia ngẫu nhiên theo từng yêu cầu và lập kế hoạch có đối chứng đồng thời, luật dừng, rollback và nguy cơ ảnh hưởng chéo. Xem [`pilot_plan.yaml`](pilot_plan.yaml).
+- **C — Phân loại lỗi:** Hai thành viên gắn nhãn độc lập 20 tình huống theo năm loại của Google PAIR (đồng thuận **20/20 = 100%**), ghi quy tắc phân biệt các ca dễ lẫn và đặc tả khắc phục 5 ca đại diện có event, ngưỡng, tần suất và một vai trò chịu trách nhiệm. Xem [`bang_loi.md`](bang_loi.md).
+- **D — Pilot:** Tính cỡ mẫu cho ba cách chia, chọn chia ngẫu nhiên phân tầng theo nhân viên (`staff`, 20 + 20 cụm) để tách sạch tác động, chấp nhận đánh đổi MDE = 6 điểm (`n = 859` hiệu dụng/nhóm, `m ≥ 299` yêu cầu/người, `DE = 6,96`), thiết lập 3 luật dừng 4 vế và cơ chế rollback ≤ 15 phút. Xem [`pilot_plan.yaml`](pilot_plan.yaml).
 - **E — Quyết định launch:** Đặc tả chỉ số, event có `trace_id`, rủi ro kinh tế và hồ sơ Gate 2a. Xem [`chi_so.md`](chi_so.md) và [`ho_so_launch_v0.md`](ho_so_launch_v0.md).
 
 ## 4. Kết quả
 
-- **Chi phí:** Tổng **4.373.585 đ**, **978/1.200** yêu cầu thành công, CPS **4.472 đ**; chi phí xem lại **1.780.000 đ simulated** và làm lại **2.264.000 đ simulated** chiếm phần lớn tổng chi phí.
-- **Phạm vi:** `noi_dia` có CPS **2.696 đ**, tỷ lệ thành công **95,0%**; `hang_nang` **8.221 đ**, **74,1%**. `quoc_te` có CPS **22.515 đ** và tỷ lệ thành công **27,3%**, không phù hợp mở rộng pilot hiện tại.
-- **Độ nhạy:** Nhân đôi chi phí làm lại làm CPS tăng **51,77%**; nhân đôi chi phí xem lại tăng **40,70%**. Trong mô phỏng B3, giới hạn **2 lần chạy** cho tổng chi phí hệ thống thấp nhất: **6.901.220 đ**. B4 có CPS **11.743 đ simulated**, sát baseline nhân viên **12.000 đ**.
-- **Chỉ số thử:** Đóng trong 24 giờ và không mở lại **994/1.200 = 82,83%**; sửa/bỏ gợi ý **48/177 = 27,12%**; mở lại trong 7 ngày **51/1.200 = 4,25%**. Các tỷ lệ này **không chứng minh Agent cải thiện** vì thiếu nhóm đối chứng đồng thời.
-- **Cỡ mẫu pilot:** Khoảng **1.250 yêu cầu/nhóm** khi chia theo yêu cầu; cách chia theo nhân viên cần khoảng **42 người/nhóm**, vượt quá 40 nhân viên hiện có. Phương án request-level cần giám sát nguy cơ spillover.
-- **Đề xuất Gate 2a:** **Go có điều kiện** cho *kế hoạch pilot* phạm vi `noi_dia` và `hang_nang`, chỉ sau khi xác nhận luật dừng, đối soát số tiền hoàn, rollback và đo đầy đủ chi phí review/rework. **Chưa có kết quả hội đồng duyệt chéo**, không ghi nhận đã được thông qua.
+- **Chi phí:** Tổng **4.373.585 đ** (có phần `simulated`), **978/1.200** yêu cầu thành công, CPS **4.472 đ** (`simulated`); chi phí cả hệ thống **5.865 đ/yêu cầu = 0,49×** baseline (`simulated`). Chi phí xem lại **1.780.000 đ** (`simulated`) và làm lại **2.264.000 đ** (`simulated`) chiếm **92,46%** tổng chi phí.
+- **Phạm vi:** `noi_dia` có CPS **2.696 đ** (`0,22×`, `simulated`), thành công **95,0%**; `hang_nang` **8.221 đ** (`0,69×`, `simulated`), **74,1%**. Loại `quoc_te` (**22.515 đ = 1,88×**, thành công **27,3%**, `simulated`) và `doi_tac` (**10.215 đ = 0,85×**, điều khoản riêng, `simulated`) khỏi pilot.
+- **Độ nhạy:** Nhân đôi chi phí làm lại làm CPS tăng **+51,77%**; nhân đôi chi phí xem lại tăng **+40,70%** (`simulated`). Ở B3, giới hạn **2 lần chạy** cho tổng chi phí hệ thống thấp nhất (**6.901.220 đ**, `simulated`). Ở B4, xem lại 100% làm CPS lên **11.743 đ = 0,98×** (với 9 phút làm lại) hoặc **12.415 đ = 1,03×** (với 15,3 phút trung bình dữ liệu, `simulated`).
+- **Chỉ số thử:** Đóng trong 24 giờ và không mở lại **994/1.200 = 82,83%**; sửa/bỏ gợi ý **48/177 = 27,12%**; mở lại trong 7 ngày **51/1.200 = 4,25%** (**3,97%** trong phạm vi pilot). Các tỷ lệ này **không chứng minh Agent cải thiện** vì thiếu nhóm đối chứng đồng thời.
+- **Cỡ mẫu pilot:** Chia theo yêu cầu cần **1.250 yêu cầu/nhóm** nhưng tràn tác động cao; chia theo nhân viên với 40 người có trần hiệu dụng **1.000 mẫu/nhóm** (`ICC = 0,02`), không đủ cho MDE 5 điểm. Nhóm chọn chia theo `staff` (**20 + 20 cụm**) với **MDE = 6 điểm** (`859` mẫu hiệu dụng/nhóm, tối thiểu **299 yêu cầu/nhân viên**, `DE = 6,96`; power ở mức +5 điểm là **0,64**).
+- **Đề xuất Gate 2a:** **Go có điều kiện** cho *kế hoạch pilot* phạm vi `noi_dia` và `hang_nang`, chỉ sau khi khoá chống trùng sổ cái (ca 7, 20), ký chấp nhận đánh đổi MDE 6 điểm (power 0,64 ở mức +5 điểm), diễn tập rollback ≤ 15 phút và bật đủ event có `trace_id` để đo thời gian nhân viên thật.
 
 ## 5. Khó khăn và cách xử lý
 
-Môi trường PowerShell ban đầu chặn kích hoạt `.venv`; đã điều chỉnh chính sách cho phiên làm việc và cài đúng dependency. Ba hàm A1 ban đầu thiếu triển khai; đã sửa, chạy đủ ba phép thử và xác nhận kết quả. Lúc xử lý B4, kết quả đầu dùng thời gian xem lại trung bình từ CSV; đã thay bằng giả định 5/9 phút theo đề. Git phát hiện lỗi whitespace; đã sửa và chạy lại `git diff --check` cùng `python lab13.py`.
+Môi trường mới clone chưa có `.venv` và PowerShell mặc định chặn script kích hoạt; nhóm xử lý bằng `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` hoặc dùng trực tiếp Python 3.11 đã đủ thư viện. Ở A3 và B4, để tránh kết luận cảm tính về chạy lại hoặc bỏ sót rủi ro thời gian làm lại thực tế cao hơn giả định, nhóm bổ sung code tính tỉ lệ `ok` theo `attempt` và độ nhạy B4 ở mức `15,3 phút/ca` (`12.415 đ = 1,03×`, `simulated`). Ở nhiệm vụ D, do 40 nhân viên bị chặn trần hiệu dụng `1.000 mẫu/nhóm` (`ICC = 0,02`), nhóm chọn chia theo `staff` (20 + 20 cụm) với `MDE = 0,06` và ghi rõ điểm bất lợi power `0,64` ở mức `+5 điểm`.
 
 ## 6. Tổng hợp đóng góp
 
-Bài hiện được thực hiện cá nhân với hỗ trợ AI cho giải thích, gợi ý code và soạn thảo. Các kết quả số đã được chạy và kiểm tra trên môi trường Python của người thực hiện; việc xác nhận nhãn độc lập và đánh giá chéo **chưa thực hiện**. Thông tin thành viên và phân công chính thức sẽ được bổ sung riêng vào `TEAM.md` nếu cần.
+Nhóm phân công theo đúng bốn vai của buổi lab (người viết code, người kiểm số, người gắn nhãn 1, người gắn nhãn 2 kiêm giữ hồ sơ) và luân phiên người viết code ở nửa sau buổi để nhiều thành viên trực tiếp chạy mô hình trên `src/lab13.py`. Mọi con số trong hồ sơ đều được kiểm chứng lại từ output của `src/lab13.py` và đối chiếu chéo giữa các file báo cáo; chi tiết đóng góp từng cá nhân được khai báo tại [`TEAM.md`](../../TEAM.md) và các file `MSSV_HoTen.md`.
 
 ## 7. Hạn chế và hướng cải thiện
 
-Dữ liệu là **simulated**; chưa có thử nghiệm đối chứng hoặc đo thời gian thật của nhân viên. Cần xác minh độc lập 20 nhãn lỗi, kiểm tra số tiền hoàn bằng đối soát, thử rollback, theo dõi event/trace_id, đánh giá ảnh hưởng chéo giữa treatment/control và chốt ngưỡng dừng trước pilot. Không dùng CPS nhỏ hơn baseline làm bằng chứng duy nhất để mở rộng.
+Toàn bộ dữ liệu hiện tại là **simulated**, chưa có nhóm đối chứng đồng thời và chưa đo thời gian xem lại/làm lại thật của nhân viên CSKH. Việc chấp nhận `MDE = 6 điểm` để giữ thiết kế 20 + 20 cụm theo nhân viên làm giảm lực kiểm định xuống `0,64` nếu tác động thật chỉ đạt `+5 điểm`. Khi bước vào pilot, cần thay thế ngay số phút `simulated` sau tuần 1, kiểm toán mẫu 100 đơn/tuần để bắt lỗi ngầm (như ca 5, 17), giám sát nhiễm chéo trong cùng depot và tuân thủ nghiêm ngặt 3 luật dừng đã khoá trước.
 
 ## 8. Tài liệu tham khảo
 
