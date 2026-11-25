@@ -1,6 +1,6 @@
 # Hồ sơ launch v0 · Trợ lý hoàn phí LogiX-VN · Gate 2a
 
-**Nhóm:** `<TenNhom>` · **Lớp:** VinUni L3B
+**Nhóm:** `TLiet` · **Lớp:** VinUni L3B
 
 > **Gate 2a chỉ xem xét kế hoạch pilot**, không phê duyệt triển khai diện rộng. Dữ liệu LogiX-VN, chi phí và thời gian nhân viên trong bài là **simulated**. Không có nhóm đối chứng đồng thời trong đợt chạy thử.
 
