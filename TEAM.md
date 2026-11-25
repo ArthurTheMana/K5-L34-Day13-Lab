@@ -12,7 +12,7 @@
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 | 1 | `Nguyễn Tài Minh Huy` | `2A203603828` | `nguyentaiminhhuy831975@gmail.com` | `ArthurTheMana` | Người viết code (CP1, CP2) |
-| 2 | `<Thành viên 2>` | `<MSSV_2>` | `<Email_2>` | `<GitHub_2>` | Người kiểm số & viết code (CP4) |
+| 2 | `Đỗ Thanh Mai` | `2A202603862` | `thanhmaido24@gmail.com` | `Laurent2526` | Người kiểm số & viết code (CP4) |
 | 3 | `Cao Phạm Tân Khải` | `2A202603883` | `cptkhai@gmail.com` | `capkhai` | Người gắn nhãn 1 (CP3) |
 | 4 | `Vũ Văn Bình` | `2A202603831` | `binhvuvan2004@gmail.com` | `hnib1908` | Người gắn nhãn 2, kiêm giữ hồ sơ (CP3, CP5) |
 
@@ -47,7 +47,7 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 ---
 
-## `<HoVaTen_2>-<MSSV_2>`
+## `2A202603862-DoThanhMai`
 
 ### Phần việc phụ trách
 
@@ -56,12 +56,12 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 ### Đóng góp cụ thể
 
-- Tính tay kiểm chứng CPS gốc (`4.373.585 ÷ 978 = 4.472 đ`, `simulated`), chi phí cả hệ thống (`5.865 đ/yêu cầu = 0,49×`) và điền hoàn chỉnh `report/team/bang_chi_phi.md`.
-- Viết phần tính cỡ mẫu D1a–D1e bằng `statsmodels` (`NormalIndPower`), tính `design_effect = 6,96` ở `m = 299`, lực kiểm định thực tế `64,17%` ở mức `+5 điểm` và tỉ lệ mở lại `4,25%` (`3,97%` phạm vi pilot); hoàn thiện `report/team/pilot_plan.yaml`.
+- Đối chiếu CPS cơ sở ở A2 (**4.472 đ/việc thành công**, `simulated`) và chi phí cả hệ thống (**5.865 đ/yêu cầu**, `simulated`). Kiểm tra B3 cho thấy giới hạn 2 lần chạy có tổng chi phí hệ thống thấp nhất trong ba kịch bản.
+- Phụ trách phần tính cỡ mẫu D1a–D1e ở CP4. Đối chiếu phương án chia theo nhân viên với 20 cụm mỗi nhóm, tối thiểu 299 yêu cầu mỗi nhân viên và hệ số thiết kế 6,96. Kiểm lại tỉ lệ mở lại trong 7 ngày là 4,25% toàn mẫu và 3,97% trong phạm vi pilot.
 
 ### Bằng chứng
 
-- Phần tính cỡ mẫu trong `src/lab13.py`, bảng đối chiếu trong `report/team/bang_chi_phi.md` và kế hoạch `report/team/pilot_plan.yaml`.
+- [Báo cáo cá nhân](report/team/2A202603862_DoThanhMai.md), [bảng chi phí A/B](report/team/bang_chi_phi.md), [mã tính cỡ mẫu D1](src/lab13.py) và [kế hoạch pilot](report/team/pilot_plan.yaml).
 
 ---
 
@@ -98,7 +98,7 @@ Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/tea
 
 - [Báo cáo cá nhân](report/team/2A202603831_VuVanBinh.md), [bảng lỗi](report/team/bang_loi.md), [bảng chi phí](report/team/bang_chi_phi.md) và [hồ sơ launch](report/team/ho_so_launch_v0.md).
 
-## 2A202603828-NguyenTaiMinhHuy
+## `2A202603828-NguyenTaiMinhHuy`
 
 ### Phần việc phụ trách
 
